@@ -402,6 +402,102 @@
             margin-bottom: var(--spacing-md);
         }
 
+        /* Video Card Styling */
+        .video-card {
+            background: var(--bg-color);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin: var(--spacing-lg) 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .video-thumbnail-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+            background: var(--secondary-color);
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-thumbnail {
+            transform: scale(1.05);
+        }
+
+        /* Play Button Overlay */
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(231, 76, 60, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-card:hover .play-button-overlay {
+            background: rgba(231, 76, 60, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Play Triangle */
+        .play-button-overlay::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 24px solid white;
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            margin-left: 6px;
+        }
+
+        .video-info {
+            padding: var(--spacing-md);
+        }
+
+        .video-info h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.25rem;
+        }
+
+        .video-info p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .video-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             :root {
@@ -663,6 +759,27 @@
             <h3>Deepen Your Understanding</h3>
             <p>If this resonates with you and you'd like to move from intellectual understanding to actual experiential recognition, consider exploring structured guidance through meditation, self-inquiry, and contemplative practices.</p>
             <p>The journey from superficial knowledge to deep recognition of your true self is one of direct experience, not just ideas.</p>
+        </div>
+
+        <!-- Related Video -->
+        <div class="video-card">
+            <a href="https://youtu.be/8AnWGqVxAjI?si=p5rm-NBUwgXU2sAq" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="video-link"
+               aria-label="Watch guided self-inquiry meditation on YouTube">
+                <div class="video-thumbnail-container">
+                    <img src="https://img.youtube.com/vi/8AnWGqVxAjI/maxresdefault.jpg" 
+                         alt="Guided Self-Inquiry Meditation Thumbnail" 
+                         class="video-thumbnail"
+                         loading="lazy">
+                    <div class="play-button-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="video-info">
+                    <h3>🎥 Guided Self-Inquiry Meditation</h3>
+                    <p>Watch this free guided meditation to deepen your practice</p>
+                </div>
+            </a>
         </div>
     </div>
 
