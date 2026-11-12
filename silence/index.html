@@ -1,72 +1,587 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Silence · A practice for 21 minutes</title>
-<meta name="description" content="A simple method for entering silence without being hijacked by thought.">
-<style>
-  :root{--bg:#fbf8f2;--ink:#2b2622;--muted:#6f655c;--accent:#b5652b;--card:#ffffff;--line:#e8e0d4}
-  @media (prefers-color-scheme:dark){:root{--bg:#16130f;--ink:#ece5da;--muted:#a89c8e;--accent:#e0954f;--card:#1f1b16;--line:#2f2922}}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Georgia,"Iowan Old Style",serif}
-  main{max-width:720px;margin:0 auto;padding:56px 22px 32px}
-  h1{font-size:2.3rem;line-height:1.2;margin:0 0 .3em;font-weight:normal}
-  .lede{color:var(--muted);font-size:1.1rem;margin:0 0 2.2em}
-  h2{font-size:1.25rem;margin:2.4em 0 .6em;color:var(--accent);font-weight:normal;letter-spacing:.02em}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:14px 0}
-  .card b{display:block;margin-bottom:4px}
-  ol,ul{padding-left:1.3em} li{margin:.45em 0}
-  em{color:var(--accent);font-style:italic}
-  .quote{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:28px 0;color:var(--muted);font-style:italic}
-  footer{max-width:720px;margin:48px auto 0;padding:24px 22px 56px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem;line-height:1.6}
-  footer p{margin:.6em 0}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple method for entering silence without being hijacked by thought.">
+    <title>Silence · A practice for 21 minutes</title>
+    <style>
+        /* CSS Custom Properties for Theme */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 900px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 4rem;
+        }
+
+        /* Modern CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+
+        /* Base Typography */
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
+            min-height: 100vh;
+            font-size: clamp(16px, 2vw, 18px);
+        }
+
+        /* Container with Modern Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            margin-bottom: var(--spacing-lg);
+            border-radius: 0 0 2rem 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Navigation - Desktop */
+        nav {
+            background: var(--bg-color);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: var(--spacing-sm);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+            display: block;
+        }
+
+        nav a:hover, nav a:focus {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Navigation Toggle Button */
+        .nav-toggle {
+            display: none; /* Hidden on desktop */
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .nav-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            position: relative;
+            width: 24px;
+            height: 20px;
+            margin: auto;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: var(--transition);
+            left: 0;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger span:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Hamburger Animation when Active */
+        .nav-toggle.active .hamburger span:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .nav-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active .hamburger span:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+        }
+
+        /* Mobile Navigation Styles */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                padding: var(--spacing-xl) var(--spacing-md);
+                transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow-y: auto;
+                backdrop-filter: blur(20px);
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            nav.active {
+                right: 0;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            nav li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                padding: var(--spacing-sm) var(--spacing-md);
+                display: block;
+                font-size: 1.1rem;
+            }
+
+            /* Overlay when menu is open */
+            .nav-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .nav-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        /* Article Sections */
+        article {
+            background: var(--bg-color);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        article:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        article h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+            line-height: 1.3;
+        }
+
+        article h3 {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            color: var(--secondary-color);
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Paragraphs and Content */
+        p {
+            margin-bottom: var(--spacing-sm);
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Emphasis Styling */
+        em {
+            font-style: italic;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Blockquote Styling */
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-style: italic;
+            color: var(--text-light);
+            background: var(--bg-accent);
+            padding: var(--spacing-md);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Highlight Box for Key Concepts */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--bg-accent) 0%, var(--bg-secondary) 100%);
+            padding: var(--spacing-md);
+            border-radius: 0.75rem;
+            margin: var(--spacing-md) 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .highlight-box p {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: var(--primary-color);
+            color: white;
+            margin-top: var(--spacing-xl);
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        footer p {
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-md: 1.5rem;
+                --spacing-lg: 2rem;
+                --spacing-xl: 2.5rem;
+            }
+
+            .container {
+                padding-bottom: 5rem; /* Space for floating nav button */
+            }
+
+            article {
+                padding: var(--spacing-md);
+            }
+
+            p {
+                text-align: left;
+            }
+
+            header {
+                border-radius: 0 0 1.5rem 1.5rem;
+            }
+
+            footer {
+                border-radius: 1.5rem 1.5rem 0 0;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            article {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* Focus Styles for Accessibility */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+    
+
+        /* Lists inside articles (root reset zeroes list padding) */
+        article ol, article ul {
+            margin: 0 0 var(--spacing-sm);
+            padding-left: 1.5rem;
+        }
+
+        article li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Method steps use highlight-box titles, matching root emphasis */
+        .highlight-box b {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Footer emphasis stays readable on the dark footer */
+        footer b, footer strong {
+            color: white;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-<main>
-  <h1>Silence</h1>
-  <p class="lede">A 21-minute practice. Thoughts are not the problem; believing a thought is important, and following it, is what breaks the silence.</p>
+    <header>
+        <h1>Beyond the Self</h1>
+        <p>Philosophical Insights on Love, Truth, and Consciousness</p>
+    </header>
 
-  <h2>The method</h2>
-  <div class="card"><b>1. Let thoughts pass, don't engage</b>When a thought arrives, notice it, say a soft inner "not now", and return. Nothing to fix, nothing to solve.</div>
-  <div class="card"><b>2. Ask: to whom is this thought coming?</b>From Ramana Maharshi's self-enquiry. The question turns attention back to the one who is aware, and the thought loses its grip.</div>
-  <div class="card"><b>3. Give the mind one small anchor</b>For the first three minutes, count breaths 1 to 10 and start again when you lose count. Or repeat <em>So</em> on the in-breath and <em>Ham</em> on the out-breath. Drop the anchor once the mind settles.</div>
-  <div class="card"><b>4. Rest in the gap</b>There is a natural pause after each out-breath. Rest attention there. That pause is a small taste of silence, and it widens.</div>
-  <div class="card"><b>5. Don't grade the session</b>A noisy sit where you came back fifty times trains the mind more than an easy one. Coming back <em>is</em> the practice.</div>
-  <div class="card"><b>6. Keep the body still, the eyes soft</b>A still body quietens the mind. Small fidgets feed it.</div>
+    <!-- Mobile Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    
+    <!-- Mobile Navigation Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
 
-  <h2>Opening ritual (one minute)</h2>
-  <ol>
-    <li>Light a diya or incense, or simply wash your hands and face.</li>
-    <li>Chant <em>Om</em> three times, long and slow. Feel the hum in the chest.</li>
-    <li>Set the intention: <em>"For 21 minutes, nothing to become, nothing to fix."</em></li>
-    <li>At the end, sit one more minute doing nothing, then bow.</li>
-  </ol>
+    <div class="container">
+        <nav id="mainNav" aria-label="Page sections">
+            <ul>
+                <li><a href="/#love" class="nav-link">What is Love?</a></li>
+                <li><a href="/#lying" class="nav-link">Why We Lie</a></li>
+                <li><a href="/#overthinking" class="nav-link">Stop Overthinking</a></li>
+                <li><a href="/#jealousy" class="nav-link">Understanding Jealousy</a></li>
+                <li><a href="/#offense" class="nav-link">Taking Offense</a></li>
+                <li><a href="/silence/" class="nav-link">Silence</a></li>
+            </ul>
+        </nav>
 
-  <h2>The way back (when you notice you've drifted)</h2>
-  <ol>
-    <li>Stop.</li>
-    <li>Three slow breaths.</li>
-    <li><em>Om</em>, three times.</li>
-    <li>Reread today's one-line goal.</li>
-    <li>Resume at the next slot. No self-blame.</li>
-  </ol>
+        <article>
+            <h2>Silence</h2>
+            <p>A 21-minute practice. Thoughts are not the problem; believing a thought is important, and following it, is what breaks the silence.</p>
 
-  <h2>Times traditionally favourable for silence</h2>
-  <ul>
-    <li><b>Brahma muhurat</b>, roughly 90 to 40 minutes before sunrise: the mind is naturally quiet before the day's input.</li>
-    <li><b>Sandhya</b>, the junctions about ten minutes either side of sunrise and sunset, when day and night meet.</li>
-    <li><b>Inward-turning nakshatras</b>: Mula, Ashlesha, Jyeshtha, Revati, Shatabhisha; and the Moon in Karka, Vrishchika or Meena.</li>
-    <li><b>Amavasya and Ekadashi</b> for inward practice; <b>Purnima</b> for devotion.</li>
-    <li><b>Difficult Moon days</b> (Chandrashtama) are not a bad time to sit. Turning inward is traditionally the best use of them.</li>
-  </ul>
-  <p class="quote">Timing is traditional guidance. The effect comes from showing up daily, not from the slot itself.</p>
-</main>
-<footer>
-  <p><b>Suggestions by Grok Bot · Jyotish Lead, 12 November 2026.</b></p>
-  <p><b>Why this page exists.</b> In daily practice the meditator noticed a weak link: during the 21-minute sits, the mind's race begins the moment a thought is taken as important, and identifying with it hijacks the session and defeats the purpose of experiencing silence. A second weak link showed up in daily life: after an immersive stretch of flow, the ladder back to practice is habitually forgotten, along with the reason for doing it. This page gathers the method, the opening ritual and the way back in one place, so the reason and the return are always one click away.</p>
-  <p>Drawn from traditional teachings (Ramana Maharshi's self-enquiry, So-Ham breath practice, classical Jyotish timing). Traditional guidance, not certainty.</p>
-</footer>
+            <h3>The method</h3>
+            <div class="highlight-box"><b>1. Let thoughts pass, don't engage</b>When a thought arrives, notice it, say a soft inner "not now", and return. Nothing to fix, nothing to solve.</div>
+            <div class="highlight-box"><b>2. Ask: to whom is this thought coming?</b>From Ramana Maharshi's self-enquiry. The question turns attention back to the one who is aware, and the thought loses its grip.</div>
+            <div class="highlight-box"><b>3. Give the mind one small anchor</b>For the first three minutes, count breaths 1 to 10 and start again when you lose count. Or repeat <em>So</em> on the in-breath and <em>Ham</em> on the out-breath. Drop the anchor once the mind settles.</div>
+            <div class="highlight-box"><b>4. Rest in the gap</b>There is a natural pause after each out-breath. Rest attention there. That pause is a small taste of silence, and it widens.</div>
+            <div class="highlight-box"><b>5. Don't grade the session</b>A noisy sit where you came back fifty times trains the mind more than an easy one. Coming back <em>is</em> the practice.</div>
+            <div class="highlight-box"><b>6. Keep the body still, the eyes soft</b>A still body quietens the mind. Small fidgets feed it.</div>
+
+            <h3>Opening ritual (one minute)</h3>
+            <ol>
+                <li>Light a diya or incense, or simply wash your hands and face.</li>
+                <li>Chant <em>Om</em> three times, long and slow. Feel the hum in the chest.</li>
+                <li>Set the intention: <em>"For 21 minutes, nothing to become, nothing to fix."</em></li>
+                <li>At the end, sit one more minute doing nothing, then bow.</li>
+            </ol>
+
+            <h3>The way back (when you notice you've drifted)</h3>
+            <ol>
+                <li>Stop.</li>
+                <li>Three slow breaths.</li>
+                <li><em>Om</em>, three times.</li>
+                <li>Reread today's one-line goal.</li>
+                <li>Resume at the next slot. No self-blame.</li>
+            </ol>
+
+            <h3>Times traditionally favourable for silence</h3>
+            <ul>
+                <li><b>Brahma muhurat</b>, roughly 90 to 40 minutes before sunrise: the mind is naturally quiet before the day's input.</li>
+                <li><b>Sandhya</b>, the junctions about ten minutes either side of sunrise and sunset, when day and night meet.</li>
+                <li><b>Inward-turning nakshatras</b>: Mula, Ashlesha, Jyeshtha, Revati, Shatabhisha; and the Moon in Karka, Vrishchika or Meena.</li>
+                <li><b>Amavasya and Ekadashi</b> for inward practice; <b>Purnima</b> for devotion.</li>
+                <li><b>Difficult Moon days</b> (Chandrashtama) are not a bad time to sit. Turning inward is traditionally the best use of them.</li>
+            </ul>
+            <blockquote>Timing is traditional guidance. The effect comes from showing up daily, not from the slot itself.</blockquote>
+        </article>
+    </div>
+
+    <footer>
+        <p><b>Suggestions by Grok Bot · Jyotish Lead, 12 November 2026.</b></p>
+        <p><b>Why this page exists.</b> In daily practice the meditator noticed a weak link: during the 21-minute sits, the mind's race begins the moment a thought is taken as important, and identifying with it hijacks the session and defeats the purpose of experiencing silence. A second weak link showed up in daily life: after an immersive stretch of flow, the ladder back to practice is habitually forgotten, along with the reason for doing it. This page gathers the method, the opening ritual and the way back in one place, so the reason and the return are always one click away.</p>
+        <p>Drawn from traditional teachings (Ramana Maharshi's self-enquiry, So-Ham breath practice, classical Jyotish timing). Traditional guidance, not certainty.</p>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle Functionality
+        const navToggle = document.getElementById('navToggle');
+        const mainNav = document.getElementById('mainNav');
+        const navOverlay = document.getElementById('navOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Toggle menu open/close
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Close menu
+        function closeNav() {
+            navToggle.classList.remove('active');
+            mainNav.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Event Listeners
+        navToggle.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', closeNav);
+
+        // Close menu when clicking a navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeNav);
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+                closeNav();
+            }
+        });
+
+        // Handle window resize - close menu if switching to desktop
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth > 768 && mainNav.classList.contains('active')) {
+                    closeNav();
+                }
+            }, 250);
+        });
+    </script>
 </body>
 </html>
