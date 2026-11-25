@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pause. Take three slow breaths, then Om three times.">
+    <title>Back on track: the watcher's junction</title>
+    <style>
+        /* CSS Custom Properties for Theme */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 900px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 4rem;
+        }
+
+        /* Modern CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+
+        /* Base Typography */
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
+            min-height: 100vh;
+            font-size: clamp(16px, 2vw, 18px);
+        }
+
+        /* Container with Modern Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            margin-bottom: var(--spacing-lg);
+            border-radius: 0 0 2rem 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Navigation - Desktop */
+        nav {
+            background: var(--bg-color);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: var(--spacing-sm);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+            display: block;
+        }
+
+        nav a:hover, nav a:focus {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Navigation Toggle Button */
+        .nav-toggle {
+            display: none; /* Hidden on desktop */
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .nav-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            position: relative;
+            width: 24px;
+            height: 20px;
+            margin: auto;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: var(--transition);
+            left: 0;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger span:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Hamburger Animation when Active */
+        .nav-toggle.active .hamburger span:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .nav-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active .hamburger span:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+        }
+
+        /* Mobile Navigation Styles */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                padding: var(--spacing-xl) var(--spacing-md);
+                transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow-y: auto;
+                backdrop-filter: blur(20px);
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            nav.active {
+                right: 0;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            nav li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                padding: var(--spacing-sm) var(--spacing-md);
+                display: block;
+                font-size: 1.1rem;
+            }
+
+            /* Overlay when menu is open */
+            .nav-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .nav-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        /* Article Sections */
+        article {
+            background: var(--bg-color);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        article:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        article h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+            line-height: 1.3;
+        }
+
+        article h3 {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            color: var(--secondary-color);
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Paragraphs and Content */
+        p {
+            margin-bottom: var(--spacing-sm);
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Emphasis Styling */
+        em {
+            font-style: italic;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Blockquote Styling */
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-style: italic;
+            color: var(--text-light);
+            background: var(--bg-accent);
+            padding: var(--spacing-md);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Highlight Box for Key Concepts */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--bg-accent) 0%, var(--bg-secondary) 100%);
+            padding: var(--spacing-md);
+            border-radius: 0.75rem;
+            margin: var(--spacing-md) 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .highlight-box p {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: var(--primary-color);
+            color: white;
+            margin-top: var(--spacing-xl);
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        footer p {
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-md: 1.5rem;
+                --spacing-lg: 2rem;
+                --spacing-xl: 2.5rem;
+            }
+
+            .container {
+                padding-bottom: 5rem; /* Space for floating nav button */
+            }
+
+            article {
+                padding: var(--spacing-md);
+            }
+
+            p {
+                text-align: left;
+            }
+
+            header {
+                border-radius: 0 0 1.5rem 1.5rem;
+            }
+
+            footer {
+                border-radius: 1.5rem 1.5rem 0 0;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            article {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* Focus Styles for Accessibility */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+    
+
+        /* Lists inside articles (root reset zeroes list padding) */
+        article ol, article ul {
+            margin: 0 0 var(--spacing-sm);
+            padding-left: 1.5rem;
+        }
+
+        article li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Method steps use highlight-box titles, matching root emphasis */
+        .highlight-box b {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Footer emphasis stays readable on the dark footer */
+        footer b, footer strong {
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="/" style="color:inherit;text-decoration:none" title="Back to home">Beyond the Self</a></h1>
+        <p>Philosophical Insights on Love, Truth, and Consciousness</p>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    
+    <!-- Mobile Navigation Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <div class="container">
+        <nav id="mainNav" aria-label="Page sections">
+            <ul>
+                <li><a href="/#love" class="nav-link">What is Love?</a></li>
+                <li><a href="/#lying" class="nav-link">Why We Lie</a></li>
+                <li><a href="/#overthinking" class="nav-link">Stop Overthinking</a></li>
+                <li><a href="/#jealousy" class="nav-link">Understanding Jealousy</a></li>
+                <li><a href="/#offense" class="nav-link">Taking Offense</a></li>
+                <li><a href="/silence/" class="nav-link">Silence</a></li>
+                <li><a href="/watcher/" class="nav-link" aria-current="page">Watcher</a></li>
+            </ul>
+        </nav>
+
+        <article id="narrative">
+            <h2>Back on track: the watcher's junction</h2>
+            <p>Pause. Take three slow breaths, then Om three times.</p>
+            <p>On the morning of 25 Nov you were looking at the day's clear slots and saw something bigger. The choghadiya wheel didn't have to be only a clock. It could be a meeting point: the place where time, your intentions and your actions come together.</p>
+            <p>The idea was simple. You pick what matters to you on the surface right now, short or long term. You place it in a clean slot. Your calendar reminds you ahead of time. Then you mark what really happened: done, moved or skipped. That's the symmetry. Done means in sync, moved means still connected but drifted, and skipped means broken. Over time this gentle record shows how your intended path and your intuition line up with the watcher's intent.</p>
+            <p>Then came the deeper insight. Nothing here is fixed. The future is undefined but can be imagined. The present can change how the past is understood. Every design choice brings in variables: some on purpose, some without your noticing, like the Pipli location, the lagna that isn't confirmed yet, and even the fact that being watched changes what you do. The system doesn't need to explain where a variable came from. It only has to say "something new has come in".</p>
+            <p>And one thing stays yours alone: whether to keep it, let it pass, let it go or keep going. The tools serve the watcher. They never lead.</p>
+            <p>To step back in: open the wheel and look at today's clean slots. Choose one thing that matters. Put it in a slot, and later mark honestly what happened. Notice whatever feels new, without judging it.</p>
+        </article>
+    </div>
+
+    <footer>
+        <p><a href="https://wheel.vipulanand.in/">Open the choghadiya wheel &rarr;</a></p>
+        <p>Created: 25 November 2026 &middot; <a href="/" style="color:inherit">&larr; Back to Beyond the Self</a></p>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle Functionality
+        const navToggle = document.getElementById('navToggle');
+        const mainNav = document.getElementById('mainNav');
+        const navOverlay = document.getElementById('navOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Toggle menu open/close
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Close menu
+        function closeNav() {
+            navToggle.classList.remove('active');
+            mainNav.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Event Listeners
+        navToggle.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', closeNav);
+
+        // Close menu when clicking a navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeNav);
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+                closeNav();
+            }
+        });
+
+        // Handle window resize - close menu if switching to desktop
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth > 768 && mainNav.classList.contains('active')) {
+                    closeNav();
+                }
+            }, 250);
+        });
+    </script>
+</body>
+</html>
